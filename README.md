@@ -1,2 +1,2 @@
 # tic-tac-toe
-Tic Tac Toe Game
+A baic tic tac toe game, which built with vanillla JS, HTML and CSS
