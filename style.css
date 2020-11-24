@@ -1,0 +1,14 @@
+#board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 500px;
+}
+
+.cell {
+  height: 100px;
+  width: 100px;
+  background-color: purple;
+  border: 1px solid black;
+  font-size: 100px;
+}
