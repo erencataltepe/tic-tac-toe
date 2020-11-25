@@ -37,11 +37,30 @@ const gameBoard = (function () {
     }
   }
 
+  function roundOver() {
+    for (let i = 0; i < board.length; i++) {
+      if (board[i][0] != "" && (board[i][0] == board[i][1] && board[i][0] == board[i][2])) {
+        return true;
+      } else if (board[0][i] != "" && (board[0][i] == board[1][i] && board[0][i] == board[2][i])) {
+        return true;
+      }
+    }
+
+    if (board[0][0] != "" && (board[0][0] == board[1][1] && board[0][0] == board[2][2])) {
+      return true;
+    } else if (board[2][0] != "" && (board[2][0] == board[1][1] && board[2][0] == board[0][2])) {
+      return true;
+    }
+
+    return false;
+  }
+
 
   return {
     newGame,
     play,
-    render
+    render,
+    roundOver
   }
 
 })();
@@ -60,10 +79,20 @@ const game = (function () {
       const columnPosition = Number(e.target.dataset.column);
       if (playerTurn === playerX.getMarker()) {
         playerX.play([rowPosition, columnPosition]);
-        playerTurn = playerY.getMarker();
+        if (gameBoard.roundOver()) {
+          console.log("Player X wins the game");
+          playerX.addScore();
+        } else {
+          playerTurn = playerY.getMarker();
+        }
       } else {
         playerY.play([rowPosition, columnPosition]);
-        playerTurn = playerX.getMarker();
+        if (gameBoard.roundOver()) {
+          console.log("Player O wins the game");
+          playerY.addScore();
+        } else {
+          playerTurn = playerX.getMarker();
+        }
       }
       gameBoard.render(cells);
     })
@@ -85,10 +114,22 @@ function player(name, marker) {
     return gameBoard.play(marker, position);
   }
 
+  let score = 0;
+
+  function getScore() {
+    return score;
+  }
+
+  function addScore() {
+    score++;
+  }
+
   return {
     getMarker,
     getName,
-    play
+    play,
+    getScore,
+    addScore
   }
 
 }
