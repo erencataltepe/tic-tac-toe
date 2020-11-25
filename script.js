@@ -75,29 +75,36 @@ const game = (function () {
 
   cells.forEach((cell) => {
     cell.addEventListener("click", (e) => {
-      const rowPosition = Number(e.target.dataset.row);
-      const columnPosition = Number(e.target.dataset.column);
+      playGame(e);
+    })
+  })
+
+  function playGame(event) {
+    const rowPosition = Number(event.target.dataset.row);
+    const columnPosition = Number(event.target.dataset.column);
+    if (!gameBoard.roundOver()) {
       if (playerTurn === playerX.getMarker()) {
         playerX.play([rowPosition, columnPosition]);
         if (gameBoard.roundOver()) {
+          gameBoard.render(cells);
           console.log("Player X wins the game");
-          playerX.addScore();
+          return true;
         } else {
           playerTurn = playerY.getMarker();
         }
       } else {
         playerY.play([rowPosition, columnPosition]);
         if (gameBoard.roundOver()) {
+          gameBoard.render(cells);
           console.log("Player O wins the game");
-          playerY.addScore();
+          return true;
         } else {
           playerTurn = playerX.getMarker();
         }
       }
-      gameBoard.render(cells);
-    })
-  })
-
+    }
+    gameBoard.render(cells);
+  }
 
 })();
 
@@ -114,22 +121,12 @@ function player(name, marker) {
     return gameBoard.play(marker, position);
   }
 
-  let score = 0;
 
-  function getScore() {
-    return score;
-  }
-
-  function addScore() {
-    score++;
-  }
 
   return {
     getMarker,
     getName,
-    play,
-    getScore,
-    addScore
+    play
   }
 
 }
