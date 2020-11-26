@@ -1,7 +1,14 @@
 const gameBoard = (function () {
-  const board = [];
+  let board = [];
+  const playerXNameText = document.getElementById("player-x-name");
+  const playerONameText = document.getElementById("player-o-name");
+  const displayText = document.getElementById("result");
 
   function newGame() {
+    board = []
+    playerXNameText.textContent = "Player X";
+    playerONameText.textContent = "Player O";
+    displayText.textContent = "";
     for (let i = 0; i < 3; i++) {
       let subArr = [];
       for (let j = 0; j < 3; j++) {
@@ -46,6 +53,8 @@ const gameBoard = (function () {
       }
     }
 
+
+
     if (board[0][0] != "" && (board[0][0] == board[1][1] && board[0][0] == board[2][2])) {
       return true;
     } else if (board[2][0] != "" && (board[2][0] == board[1][1] && board[2][0] == board[0][2])) {
@@ -55,22 +64,40 @@ const gameBoard = (function () {
     return false;
   }
 
+  function isATie(cells) {
+
+    for (let i = 0; i < cells.length; i++) {
+      if (cells[i].textContent == "") {
+        return false;
+      }
+    }
+    return true;
+
+  }
 
   return {
     newGame,
     play,
     render,
-    roundOver
+    roundOver,
+    isATie
   }
 
 })();
 
 const game = (function () {
   const cells = document.querySelectorAll(".cell");
+  const newGameButton = document.getElementById("new-game-button");
+
+  const resultText = document.getElementById("result");
+
+
   gameBoard.newGame();
   gameBoard.render(cells);
-  const playerX = player("Eren", "X");
-  const playerY = player("Nazlı", "O");
+
+  const playerX = player("X");
+  const playerO = player("O");
+
   let playerTurn = "X";
 
   cells.forEach((cell) => {
@@ -79,24 +106,38 @@ const game = (function () {
     })
   })
 
+  newGameButton.addEventListener("click", () => {
+    gameBoard.newGame();
+    gameBoard.render(cells);
+    playerTurn = "X";
+  })
+
+
+
   function playGame(event) {
     const rowPosition = Number(event.target.dataset.row);
     const columnPosition = Number(event.target.dataset.column);
     if (!gameBoard.roundOver()) {
+      if (gameBoard.isATie(cells)) {
+        resultText.textContent = "It is a tie!!!";
+      }
       if (playerTurn === playerX.getMarker()) {
         playerX.play([rowPosition, columnPosition]);
         if (gameBoard.roundOver()) {
           gameBoard.render(cells);
-          console.log("Player X wins the game");
+          resultText.textContent = `Player ${playerX.getName()} wins the game!!`
           return true;
         } else {
-          playerTurn = playerY.getMarker();
+          playerTurn = playerO.getMarker();
+        }
+        if (gameBoard.isATie(cells)) {
+          resultText.textContent = "It is a tie!!!";
         }
       } else {
-        playerY.play([rowPosition, columnPosition]);
+        playerO.play([rowPosition, columnPosition]);
         if (gameBoard.roundOver()) {
           gameBoard.render(cells);
-          console.log("Player O wins the game");
+          resultText.textContent = `Player ${playerO.getName()} wins the game!!`
           return true;
         } else {
           playerTurn = playerX.getMarker();
@@ -108,13 +149,19 @@ const game = (function () {
 
 })();
 
-function player(name, marker) {
+function player(marker) {
+  let name = marker;
+
   function getMarker() {
     return marker;
   }
 
   function getName() {
     return name;
+  }
+
+  function setName(newName) {
+    name = newName;
   }
 
   function play(position) {
@@ -126,7 +173,8 @@ function player(name, marker) {
   return {
     getMarker,
     getName,
-    play
+    play,
+    setName
   }
 
 }
