@@ -2,13 +2,42 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  width: 500px;
+  width: 600px;
+  margin-top: 100px;
+  justify-items: stretch;
 }
 
 .cell {
   height: 100px;
-  width: 100px;
-  background-color: purple;
-  border: 1px solid black;
+  width: 200px;
   font-size: 100px;
+  display: grid;
+  justify-items: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#control-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 500px;
+  align-items: center;
+}
+
+.side-borders {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.bottom-borders {
+  border-bottom: 1px solid black;
 }
