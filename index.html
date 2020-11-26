@@ -9,17 +9,37 @@
 </head>
 
 <body>
-  <div id="board">
-    <div class="cell" data-row="0" data-column="0" data-key="0"></div>
-    <div class="cell" data-row="0" data-column="1" data-key="1"></div>
-    <div class="cell" data-row="0" data-column="2" data-key="2"></div>
-    <div class="cell" data-row="1" data-column="0" data-key="3"></div>
-    <div class="cell" data-row="1" data-column="1" data-key="4"></div>
-    <div class="cell" data-row="1" data-column="2" data-key="5"></div>
-    <div class="cell" data-row="2" data-column="0" data-key="6"></div>
-    <div class="cell" data-row="2" data-column="1" data-key="7"></div>
-    <div class="cell" data-row="2" data-column="2" data-key="8"></div>
-  </div>
+  <header>
+    <h1>Tic Tac Toeeeww</h1>
+  </header>
+  <main>
+    <div id="control-area">
+      <div id="player-x">
+        <h2 id="player-x-name" data-key="X">Player X</h2>
+      </div>
+      <div id="new-game-area">
+        <button id="new-game-button">New Game</button>
+      </div>
+      <div id="player-o">
+        <h2 id="player-o-name" data-key="O">Player O</h2>
+      </div>
+    </div>
+    <div id="board">
+      <div class="cell bottom-borders" data-row="0" data-column="0" data-key="0"></div>
+      <div class="cell side-borders bottom-borders" data-row="0" data-column="1" data-key="1"></div>
+      <div class="cell bottom-borders" data-row="0" data-column="2" data-key="2"></div>
+      <div class="cell bottom-borders" data-row="1" data-column="0" data-key="3"></div>
+      <div class="cell side-borders bottom-borders" data-row="1" data-column="1" data-key="4"></div>
+      <div class="cell bottom-borders" data-row="1" data-column="2" data-key="5"></div>
+      <div class="cell" data-row="2" data-column="0" data-key="6"></div>
+      <div class="cell side-borders" data-row="2" data-column="1" data-key="7"></div>
+      <div class="cell" data-row="2" data-column="2" data-key="8"></div>
+    </div>
+    <div id="display-area">
+      <h2 id="result"></h2>
+    </div>
+  </main>
+
   <script src="script.js"></script>
 </body>
 
